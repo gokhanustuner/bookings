@@ -1,4 +1,4 @@
-package com.hostfully.bookings.domain.entity;
+package com.hostfully.bookings.domain.entity.property;
 
 import com.hostfully.bookings.domain.value.PropertyId;
 import com.hostfully.bookings.domain.value.PropertyName;

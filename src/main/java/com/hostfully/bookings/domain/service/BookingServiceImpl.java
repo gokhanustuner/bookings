@@ -1,15 +1,13 @@
 package com.hostfully.bookings.domain.service;
 
-import com.hostfully.bookings.domain.command.CancelBookingCommand;
-import com.hostfully.bookings.domain.command.CreateBookingCommand;
-import com.hostfully.bookings.domain.command.GetBookingCommand;
-import com.hostfully.bookings.domain.command.UpdateBookingCommand;
-import com.hostfully.bookings.domain.entity.Booking;
-import com.hostfully.bookings.domain.entity.BookingStatus;
-import com.hostfully.bookings.domain.entity.Property;
+import com.hostfully.bookings.domain.command.booking.CancelBookingCommand;
+import com.hostfully.bookings.domain.command.booking.CreateBookingCommand;
+import com.hostfully.bookings.domain.command.booking.GetBookingCommand;
+import com.hostfully.bookings.domain.command.booking.UpdateBookingCommand;
+import com.hostfully.bookings.domain.entity.booking.Booking;
+import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.domain.repository.BookingRepository;
 import com.hostfully.bookings.domain.repository.PropertyRepository;
-import com.hostfully.bookings.domain.value.BookingPeriod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +53,7 @@ public final class BookingServiceImpl implements BookingService {
     public Booking cancelBooking(final CancelBookingCommand cancelBookingCommand) {
         final Booking booking = bookingRepository.findById(cancelBookingCommand.bookingId());
 
-        booking.setBookingStatus(BookingStatus.CANCELLED);
+        booking.setBookingStatus(cancelBookingCommand.bookingStatus());
         bookingRepository.save(booking);
 
         return booking;

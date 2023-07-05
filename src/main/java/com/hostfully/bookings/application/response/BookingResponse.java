@@ -1,6 +1,6 @@
 package com.hostfully.bookings.application.response;
 
-import com.hostfully.bookings.domain.entity.Booking;
+import com.hostfully.bookings.domain.entity.booking.Booking;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,8 +27,8 @@ public record BookingResponse(Long id, String startDate, String endDate, Propert
         final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return of(
                 booking.getBookingId().value(),
-                booking.getProperty().getPropertyId().value(),
-                booking.getProperty().getPropertyName().value(),
+                booking.getPropertyId().value(),
+                booking.getPropertyName().value(),
                 dateFormat.format(booking.getBookingPeriod().startDate()),
                 dateFormat.format(booking.getBookingPeriod().endDate()),
                 booking.getBookingStatus().name()

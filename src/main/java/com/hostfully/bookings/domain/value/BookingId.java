@@ -5,6 +5,9 @@ import com.hostfully.bookings.domain.exception.InvalidEntityIdException;
 public record BookingId(Long value) {
     public static BookingId of(final String bookingId) {
         try {
+            if (bookingId == null)
+                throw new InvalidEntityIdException("bookingId must be provided");
+
             if (Long.parseLong(bookingId) < 1)
                 throw new InvalidEntityIdException("bookingId must be a positive number");
 
@@ -15,6 +18,9 @@ public record BookingId(Long value) {
     }
 
     public static BookingId of(final Long bookingId) {
+        if (bookingId == null)
+            throw new InvalidEntityIdException("bookingId must be provided");
+
         if (bookingId < 1)
             throw new InvalidEntityIdException("bookingId must be a positive number");
 

@@ -1,5 +1,6 @@
 package com.hostfully.bookings.infrastructure.persistence.entity;
 
+import com.hostfully.bookings.domain.entity.block.BlockStatus;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -15,11 +16,12 @@ public class BlockEntity {
 
     private Date endDate;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private BlockStatus blockStatus;
 
     @ManyToOne
-    @JoinColumn(name = "block_type_id")
-    private BlockTypeEntity blockType;
+    @JoinColumn(name = "block_reason_id")
+    private BlockReasonEntity blockReason;
 
     @ManyToOne
     @JoinColumn(name = "property_id")
@@ -49,20 +51,12 @@ public class BlockEntity {
         this.endDate = endDate;
     }
 
-    public String getName() {
-        return name;
+    public BlockReasonEntity getBlockReason() {
+        return blockReason;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BlockTypeEntity getBlockType() {
-        return blockType;
-    }
-
-    public void setBlockType(BlockTypeEntity blockType) {
-        this.blockType = blockType;
+    public void setBlockReason(BlockReasonEntity blockReason) {
+        this.blockReason = blockReason;
     }
 
     public PropertyEntity getProperty() {
@@ -71,5 +65,13 @@ public class BlockEntity {
 
     public void setProperty(PropertyEntity property) {
         this.property = property;
+    }
+
+    public BlockStatus getBlockStatus() {
+        return blockStatus;
+    }
+
+    public void setBlockStatus(final BlockStatus blockStatus) {
+        this.blockStatus = blockStatus;
     }
 }

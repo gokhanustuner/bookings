@@ -1,10 +1,10 @@
 package com.hostfully.bookings.domain.service;
 
-import com.hostfully.bookings.domain.command.CancelBookingCommand;
-import com.hostfully.bookings.domain.command.CreateBookingCommand;
-import com.hostfully.bookings.domain.command.GetBookingCommand;
-import com.hostfully.bookings.domain.command.UpdateBookingCommand;
-import com.hostfully.bookings.domain.entity.Booking;
+import com.hostfully.bookings.domain.command.booking.CancelBookingCommand;
+import com.hostfully.bookings.domain.command.booking.CreateBookingCommand;
+import com.hostfully.bookings.domain.command.booking.GetBookingCommand;
+import com.hostfully.bookings.domain.command.booking.UpdateBookingCommand;
+import com.hostfully.bookings.domain.entity.booking.Booking;
 
 import java.util.List;
 

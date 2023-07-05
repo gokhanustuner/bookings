@@ -1,9 +1,21 @@
 package com.hostfully.bookings.domain.service;
 
+import com.hostfully.bookings.domain.command.block.CancelBlockCommand;
+import com.hostfully.bookings.domain.command.block.CreateBlockCommand;
+import com.hostfully.bookings.domain.command.block.GetBlockCommand;
+import com.hostfully.bookings.domain.command.block.UpdateBlockCommand;
+import com.hostfully.bookings.domain.entity.block.Block;
+
+import java.util.List;
+
 public interface BlockService {
-    void createBlock();
+    Block createBlock(CreateBlockCommand createBlockCommand);
 
-    void updateBlock();
+    Block updateBlock(UpdateBlockCommand updateBlockCommand);
 
-    void deleteBlock();
+    Block getBlock(GetBlockCommand getBlockCommand);
+
+    List<Block> listBlocks();
+
+    Block cancelBlock(CancelBlockCommand cancelBlockCommand);
 }

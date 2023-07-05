@@ -1,8 +1,8 @@
 package com.hostfully.bookings.infrastructure.mapper;
 
-import com.hostfully.bookings.domain.entity.Booking;
-import com.hostfully.bookings.domain.entity.BookingStatus;
-import com.hostfully.bookings.domain.entity.Property;
+import com.hostfully.bookings.domain.entity.booking.Booking;
+import com.hostfully.bookings.domain.entity.booking.BookingStatus;
+import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.domain.value.BookingId;
 import com.hostfully.bookings.domain.value.BookingPeriod;
 import com.hostfully.bookings.infrastructure.persistence.entity.BookingEntity;
@@ -24,7 +24,7 @@ public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking>
     }
 
     @Override
-    public List<Booking> JPAEntityToDomainEntity(List<BookingEntity> JPABookingEntities) {
+    public List<Booking> JPAEntityToDomainEntity(final List<BookingEntity> JPABookingEntities) {
         return JPABookingEntities.stream().map(this::JPAEntityToDomainEntity).toList();
     }
 
@@ -33,9 +33,9 @@ public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking>
         final BookingEntity bookingEntity = new BookingEntity();
         final PropertyEntity propertyEntity = new PropertyEntity();
 
-        if (domainBookingEntity.getBookingId() != null) {
+        if (domainBookingEntity.getBookingId() != null)
             bookingEntity.setId(domainBookingEntity.getBookingId().value());
-        }
+
         bookingEntity.setStartDate(domainBookingEntity.getBookingPeriod().startDate());
         bookingEntity.setEndDate(domainBookingEntity.getBookingPeriod().endDate());
         bookingEntity.setStatus(domainBookingEntity.getBookingStatus());

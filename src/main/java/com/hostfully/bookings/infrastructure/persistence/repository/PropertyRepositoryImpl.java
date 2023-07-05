@@ -1,6 +1,6 @@
 package com.hostfully.bookings.infrastructure.persistence.repository;
 
-import com.hostfully.bookings.domain.entity.Property;
+import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.domain.exception.PropertyNotFoundException;
 import com.hostfully.bookings.domain.repository.PropertyRepository;
 import com.hostfully.bookings.domain.value.PropertyId;
@@ -28,12 +28,15 @@ public final class PropertyRepositoryImpl implements PropertyRepository {
 
     @Override
     public Property findById(final PropertyId propertyId) {
-        final PropertyEntity propertyEntity = propertyJPARepository
-                .findById(propertyId.value())
-                .orElseThrow(
-                        () -> new PropertyNotFoundException(String.format("Property with id %s not found", propertyId))
+        return propertyEntityMapper
+                .JPAEntityToDomainEntity(
+                        propertyJPARepository
+                                .findById(propertyId.value())
+                                .orElseThrow(
+                                        () -> new PropertyNotFoundException(
+                                                String.format("Property with id %s not found", propertyId)
+                                        )
+                                )
                 );
-
-        return propertyEntityMapper.JPAEntityToDomainEntity(propertyEntity);
     }
 }

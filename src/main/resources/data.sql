@@ -11,6 +11,6 @@ INSERT INTO property (name) VALUES ('Property J');
 INSERT INTO property (name) VALUES ('Property K');
 INSERT INTO property (name) VALUES ('Property L');
 
-INSERT INTO block_type (name) VALUES ('Self-use of the property.');
-INSERT INTO block_type (name) VALUES ('Painting the walls of the property.');
-INSERT INTO block_type (name) VALUES ('Renovation of the entire property.');
+INSERT INTO block_reason (description) VALUES ('Self-use of the property.');
+INSERT INTO block_reason (description) VALUES ('Painting the walls of the property.');
+INSERT INTO block_reason (description) VALUES ('Renovation of the entire property.');

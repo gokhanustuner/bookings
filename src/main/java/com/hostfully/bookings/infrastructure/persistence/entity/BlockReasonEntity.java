@@ -3,13 +3,13 @@ package com.hostfully.bookings.infrastructure.persistence.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "block_type")
-public class BlockTypeEntity {
+@Table(name = "block_reason")
+public class BlockReasonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String description;
 
     public void setId(Long id) {
         this.id = id;
@@ -19,11 +19,11 @@ public class BlockTypeEntity {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(final String description) {
+        this.description = description;
     }
 }

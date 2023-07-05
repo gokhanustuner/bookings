@@ -1,5 +1,6 @@
-package com.hostfully.bookings.domain.entity;
+package com.hostfully.bookings.domain.entity.booking;
 
+import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.domain.value.BookingPeriod;
 import com.hostfully.bookings.domain.value.BookingId;
 import com.hostfully.bookings.domain.value.PropertyId;
@@ -49,7 +50,7 @@ public class Booking {
         return bookingId;
     }
 
-    public void setBookingId(BookingId bookingId) {
+    public void setBookingId(final BookingId bookingId) {
         this.bookingId = bookingId;
     }
 
@@ -57,7 +58,7 @@ public class Booking {
         return bookingPeriod;
     }
 
-    public void setBookingPeriod(BookingPeriod bookingPeriod) {
+    public void setBookingPeriod(final BookingPeriod bookingPeriod) {
         this.bookingPeriod = bookingPeriod;
     }
 
@@ -65,7 +66,7 @@ public class Booking {
         return property;
     }
 
-    public void setProperty(Property property) {
+    public void setProperty(final Property property) {
         this.property = property;
     }
 
@@ -81,7 +82,7 @@ public class Booking {
         return bookingStatus;
     }
 
-    public void setBookingStatus(BookingStatus bookingStatus) {
+    public void setBookingStatus(final BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
     }
 }

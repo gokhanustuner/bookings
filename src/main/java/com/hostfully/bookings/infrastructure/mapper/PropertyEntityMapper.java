@@ -1,6 +1,6 @@
 package com.hostfully.bookings.infrastructure.mapper;
 
-import com.hostfully.bookings.domain.entity.Property;
+import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.infrastructure.persistence.entity.PropertyEntity;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class PropertyEntityMapper implements EntityMapper<PropertyEntity, Proper
     }
 
     @Override
-    public List<Property> JPAEntityToDomainEntity(List<PropertyEntity> JPAPropertyEntities) {
+    public List<Property> JPAEntityToDomainEntity(final List<PropertyEntity> JPAPropertyEntities) {
         return JPAPropertyEntities.stream().map(this::JPAEntityToDomainEntity).toList();
     }
 
@@ -25,9 +25,9 @@ public class PropertyEntityMapper implements EntityMapper<PropertyEntity, Proper
     public PropertyEntity domainEntityToJPAEntity(final Property domainPropertyEntity) {
         final PropertyEntity propertyEntity = new PropertyEntity();
 
-        if (domainPropertyEntity.getPropertyId() != null) {
+        if (domainPropertyEntity.getPropertyId() != null)
             propertyEntity.setId(domainPropertyEntity.getPropertyId().value());
-        }
+
         propertyEntity.setName(domainPropertyEntity.getPropertyName().value());
 
         return propertyEntity;

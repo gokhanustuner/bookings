@@ -1,6 +1,6 @@
 package com.hostfully.bookings.infrastructure.persistence.repository;
 
-import com.hostfully.bookings.domain.entity.Booking;
+import com.hostfully.bookings.domain.entity.booking.Booking;
 import com.hostfully.bookings.domain.exception.BookingNotFoundException;
 import com.hostfully.bookings.domain.repository.BookingRepository;
 import com.hostfully.bookings.domain.value.BookingId;

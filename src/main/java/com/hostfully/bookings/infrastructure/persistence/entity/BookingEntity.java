@@ -1,6 +1,6 @@
 package com.hostfully.bookings.infrastructure.persistence.entity;
 
-import com.hostfully.bookings.domain.entity.BookingStatus;
+import com.hostfully.bookings.domain.entity.booking.BookingStatus;
 import jakarta.persistence.*;
 
 import java.util.Date;
