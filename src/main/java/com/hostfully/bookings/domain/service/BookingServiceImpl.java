@@ -4,10 +4,16 @@ import com.hostfully.bookings.domain.command.booking.CancelBookingCommand;
 import com.hostfully.bookings.domain.command.booking.CreateBookingCommand;
 import com.hostfully.bookings.domain.command.booking.GetBookingCommand;
 import com.hostfully.bookings.domain.command.booking.UpdateBookingCommand;
+import com.hostfully.bookings.domain.entity.block.Block;
 import com.hostfully.bookings.domain.entity.booking.Booking;
 import com.hostfully.bookings.domain.entity.property.Property;
+import com.hostfully.bookings.domain.exception.PropertyBlockedException;
+import com.hostfully.bookings.domain.exception.PropertyUnavailableException;
+import com.hostfully.bookings.domain.repository.BlockRepository;
 import com.hostfully.bookings.domain.repository.BookingRepository;
 import com.hostfully.bookings.domain.repository.PropertyRepository;
+import com.hostfully.bookings.domain.value.BlockPeriod;
+import com.hostfully.bookings.domain.value.BookingPeriod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +25,26 @@ public final class BookingServiceImpl implements BookingService {
 
     private final PropertyRepository propertyRepository;
 
+    private final BlockRepository blockRepository;
+
     @Autowired
-    public BookingServiceImpl(final BookingRepository bookingRepository, final PropertyRepository propertyRepository) {
+    public BookingServiceImpl(
+            final BookingRepository bookingRepository,
+            final PropertyRepository propertyRepository,
+            final BlockRepository blockRepository
+    ) {
         this.bookingRepository = bookingRepository;
         this.propertyRepository = propertyRepository;
+        this.blockRepository = blockRepository;
     }
 
     @Override
     public Booking createBooking(final CreateBookingCommand createBookingCommand) {
         final Property property = propertyRepository.findById(createBookingCommand.propertyId());
+
+        checkPropertyBlockedInBookingPeriod(property, createBookingCommand.bookingPeriod());
+        checkBookingsOverlapInBookingPeriod(property, createBookingCommand.bookingPeriod());
+
         final Booking booking = bookingRepository.save(
                 Booking.of(
                         createBookingCommand.bookingPeriod(),
@@ -72,5 +89,38 @@ public final class BookingServiceImpl implements BookingService {
     @Override
     public Booking getBooking(final GetBookingCommand getBookingCommand) {
         return bookingRepository.findById(getBookingCommand.bookingId());
+    }
+
+    private void checkBookingsOverlapInBookingPeriod(final Property property, final BookingPeriod bookingPeriod) {
+        final List<Booking> bookings = bookingRepository.findActiveBookingsByPropertyAndBookingPeriod(
+                property,
+                bookingPeriod
+        );
+
+        if (bookings.size() > 0)
+            throw new PropertyUnavailableException(
+                    String.format(
+                            "Property with id %s is unavailable during the time you requested for booking.",
+                            property.getPropertyId()
+                    )
+            );
+    }
+
+    private void checkPropertyBlockedInBookingPeriod(final Property property, final BookingPeriod bookingPeriod) {
+        final List<Block> blocks = blockRepository.findActiveBlocksByPropertyAndBlockPeriod(
+                property,
+                BlockPeriod.of(
+                        bookingPeriod.startDate(),
+                        bookingPeriod.endDate()
+                )
+        );
+
+        if (blocks.size() > 0)
+            throw new PropertyBlockedException(
+                    String.format(
+                            "Property with id %s is blocked during the time you requested for booking.",
+                            property.getPropertyId()
+                    )
+            );
     }
 }

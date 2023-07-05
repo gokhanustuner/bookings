@@ -16,8 +16,6 @@ public class Booking {
 
     private BookingStatus bookingStatus;
 
-    private Booking() {
-    }
     private Booking(
             final BookingId bookingId,
             final BookingPeriod bookingPeriod,
@@ -44,6 +42,10 @@ public class Booking {
             final BookingStatus bookingStatus
     ) {
         return new Booking(bookingId, bookingPeriod, property, bookingStatus);
+    }
+
+    public Boolean active() {
+        return bookingStatus == BookingStatus.ACTIVE;
     }
 
     public BookingId getBookingId() {

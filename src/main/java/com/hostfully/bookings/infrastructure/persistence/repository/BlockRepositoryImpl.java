@@ -1,11 +1,15 @@
 package com.hostfully.bookings.infrastructure.persistence.repository;
 
 import com.hostfully.bookings.domain.entity.block.Block;
+import com.hostfully.bookings.domain.entity.block.BlockStatus;
+import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.domain.exception.BlockNotFoundException;
 import com.hostfully.bookings.domain.repository.BlockRepository;
 import com.hostfully.bookings.domain.value.BlockId;
+import com.hostfully.bookings.domain.value.BlockPeriod;
 import com.hostfully.bookings.infrastructure.mapper.EntityMapper;
 import com.hostfully.bookings.infrastructure.persistence.entity.BlockEntity;
+import com.hostfully.bookings.infrastructure.persistence.entity.PropertyEntity;
 import com.hostfully.bookings.infrastructure.persistence.jpa.BlockJPARepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +25,20 @@ public final class BlockRepositoryImpl implements BlockRepository {
 
     private final EntityMapper<BlockEntity, Block> blockEntityMapper;
 
+    private final EntityMapper<PropertyEntity, Property> propertyEntityMapper;
+
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
     public BlockRepositoryImpl(
             final BlockJPARepository blockJPARepository,
             final EntityMapper<BlockEntity, Block> blockEntityMapper,
+            final EntityMapper<PropertyEntity, Property> propertyEntityMapper,
             final EntityManagerFactory entityManagerFactory
     ) {
         this.blockJPARepository = blockJPARepository;
         this.blockEntityMapper = blockEntityMapper;
+        this.propertyEntityMapper = propertyEntityMapper;
         this.entityManagerFactory = entityManagerFactory;
     }
 
@@ -76,6 +84,18 @@ public final class BlockRepositoryImpl implements BlockRepository {
     public List<Block> findAll() {
         return blockEntityMapper.JPAEntityToDomainEntity(
                 (List<BlockEntity>) blockJPARepository.findAll()
+        );
+    }
+
+    @Override
+    public List<Block> findActiveBlocksByPropertyAndBlockPeriod(Property property, BlockPeriod blockPeriod) {
+        return blockEntityMapper.JPAEntityToDomainEntity(
+                blockJPARepository.findBlockEntitiesByPropertyEqualsAndStartDateIsLessThanEqualAndEndDateIsGreaterThanAndBlockStatusEquals(
+                        propertyEntityMapper.domainEntityToJPAEntity(property),
+                        blockPeriod.endDate(),
+                        blockPeriod.startDate(),
+                        BlockStatus.ACTIVE
+                )
         );
     }
 }

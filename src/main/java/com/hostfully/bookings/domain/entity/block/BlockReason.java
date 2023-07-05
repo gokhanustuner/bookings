@@ -7,8 +7,6 @@ public class BlockReason {
 
     private BlockReasonDescription blockReasonDescription;
 
-    private BlockReason() {}
-
     private BlockReason(final BlockReasonId blockReasonId, final BlockReasonDescription blockReasonDescription) {
         this.blockReasonId = blockReasonId;
         this.blockReasonDescription = blockReasonDescription;

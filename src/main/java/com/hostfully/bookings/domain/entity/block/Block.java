@@ -3,8 +3,6 @@ package com.hostfully.bookings.domain.entity.block;
 import com.hostfully.bookings.domain.entity.property.Property;
 import com.hostfully.bookings.domain.value.*;
 
-import java.util.Date;
-
 public class Block {
     private BlockId blockId;
 
@@ -15,8 +13,6 @@ public class Block {
     private BlockReason blockReason;
 
     private BlockStatus blockStatus;
-
-    private Block() {}
 
     private Block(
             final BlockId blockId,
@@ -48,6 +44,10 @@ public class Block {
             final BlockStatus blockStatus
     ) {
         return new Block(blockId, blockPeriod, property, blockReason, blockStatus);
+    }
+
+    public Boolean active() {
+        return blockStatus == BlockStatus.ACTIVE;
     }
 
     public BlockId getBlockId() {
@@ -102,7 +102,7 @@ public class Block {
         return blockStatus;
     }
 
-    public void setBlockStatus(BlockStatus blockStatus) {
+    public void setBlockStatus(final BlockStatus blockStatus) {
         this.blockStatus = blockStatus;
     }
 }

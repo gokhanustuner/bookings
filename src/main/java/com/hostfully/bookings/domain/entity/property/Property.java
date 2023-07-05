@@ -8,23 +8,58 @@ public class Property {
 
     private final PropertyName propertyName;
 
-    public Property(final PropertyId propertyId, final PropertyName propertyName) {
+    private final Boolean blocked;
+
+    private final Boolean unavailable;
+
+    private Property(
+            final PropertyId propertyId,
+            final PropertyName propertyName,
+            final Boolean blocked,
+            final Boolean unavailable
+    ) {
         this.propertyId = propertyId;
         this.propertyName = propertyName;
+        this.blocked = blocked;
+        this.unavailable = unavailable;
     }
     public static Property of(final Long propertyId, final String propertyName) {
         return new Property(
                 PropertyId.of(propertyId.toString()),
-                new PropertyName(propertyName)
+                new PropertyName(propertyName),
+                false,
+                false
+        );
+    }
+
+    public static Property of(
+            final Long propertyId,
+            final String propertyName,
+            final Boolean propertyBlocked,
+            final Boolean propertyUnavailable
+    ) {
+        return new Property(
+                PropertyId.of(propertyId.toString()),
+                new PropertyName(propertyName),
+                propertyBlocked,
+                propertyUnavailable
         );
     }
 
     public static Property of(final PropertyId propertyId) {
-        return new Property(propertyId, null);
+        return new Property(propertyId, null, false, false);
     }
 
     public static Property of(final PropertyId propertyId, final PropertyName propertyName) {
-        return new Property(propertyId, propertyName);
+        return new Property(propertyId, propertyName, false, false);
+    }
+
+    public Boolean blocked() {
+        return blocked;
+    }
+
+    public Boolean unavailable() {
+        return unavailable;
     }
 
     public PropertyId getPropertyId() {
