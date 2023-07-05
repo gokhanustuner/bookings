@@ -1,10 +1,10 @@
 package com.hostfully.bookings.domain.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hostfully.bookings.domain.value.BookingPeriod;
 import com.hostfully.bookings.domain.value.BookingId;
+import com.hostfully.bookings.domain.value.PropertyId;
+import com.hostfully.bookings.domain.value.PropertyName;
 
-@JsonSerialize
 public class Booking {
 
     private BookingId bookingId;
@@ -23,6 +23,13 @@ public class Booking {
         this.bookingId = bookingId;
         this.bookingPeriod = bookingPeriod;
         this.property = property;
+    }
+
+    public static Booking of(
+            final BookingPeriod bookingPeriod,
+            final Property property
+    ) {
+        return new Booking(null, bookingPeriod, property);
     }
     public static Booking of(
             final BookingId bookingId,
@@ -54,5 +61,13 @@ public class Booking {
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public PropertyId getPropertyId() {
+        return property.getPropertyId();
+    }
+
+    public PropertyName getPropertyName() {
+        return property.getPropertyName();
     }
 }

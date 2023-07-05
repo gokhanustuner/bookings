@@ -13,4 +13,8 @@ public record PropertyId(Long value) {
             throw new InvalidEntityIdException("propertyId must be a numeric entity", e);
         }
     }
+
+    public String toString() {
+        return value.toString();
+    }
 }

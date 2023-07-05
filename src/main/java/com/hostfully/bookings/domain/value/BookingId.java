@@ -13,4 +13,16 @@ public record BookingId(Long value) {
             throw new InvalidEntityIdException("bookingId must be a numeric entity", e);
         }
     }
+
+    public static BookingId of(final Long bookingId) {
+        if (bookingId < 1)
+            throw new InvalidEntityIdException("bookingId must be a positive number");
+
+        return new BookingId(bookingId);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

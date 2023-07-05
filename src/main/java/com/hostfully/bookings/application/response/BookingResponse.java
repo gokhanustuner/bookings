@@ -25,8 +25,8 @@ public record BookingResponse(Long id, String startDate, String endDate, Propert
         final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return of(
                 booking.getBookingId().value(),
-                booking.getProperty().propertyId().value(),
-                booking.getProperty().propertyName().value(),
+                booking.getProperty().getPropertyId().value(),
+                booking.getProperty().getPropertyName().value(),
                 dateFormat.format(booking.getBookingPeriod().startDate()),
                 dateFormat.format(booking.getBookingPeriod().endDate())
         );

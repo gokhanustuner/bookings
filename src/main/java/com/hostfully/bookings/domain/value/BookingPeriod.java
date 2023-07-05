@@ -35,6 +35,10 @@ public record BookingPeriod(Date startDate, Date endDate) {
         return new BookingPeriod(parse(startDate), parse(endDate));
     }
 
+    public static BookingPeriod of(final Date startDate, final Date endDate) {
+        return new BookingPeriod(startDate, endDate);
+    }
+
     private static Date parse(final String date) {
         try {
             return dateFormat.parse(date);

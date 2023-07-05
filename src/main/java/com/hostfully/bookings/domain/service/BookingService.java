@@ -4,9 +4,10 @@ import com.hostfully.bookings.domain.command.CancelBookingCommand;
 import com.hostfully.bookings.domain.command.CreateBookingCommand;
 import com.hostfully.bookings.domain.command.GetBookingCommand;
 import com.hostfully.bookings.domain.command.UpdateBookingCommand;
+import com.hostfully.bookings.domain.entity.Booking;
 
 public interface BookingService {
-    void createBooking(CreateBookingCommand createBookingCommand);
+    Booking createBooking(CreateBookingCommand createBookingCommand);
 
     void updateBooking(UpdateBookingCommand updateBookingCommand);
     void cancelBooking(CancelBookingCommand cancelBookingCommand);

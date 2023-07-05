@@ -4,7 +4,10 @@ import com.hostfully.bookings.domain.command.CancelBookingCommand;
 import com.hostfully.bookings.domain.command.CreateBookingCommand;
 import com.hostfully.bookings.domain.command.GetBookingCommand;
 import com.hostfully.bookings.domain.command.UpdateBookingCommand;
+import com.hostfully.bookings.domain.entity.Booking;
+import com.hostfully.bookings.domain.entity.Property;
 import com.hostfully.bookings.domain.repository.BookingRepository;
+import com.hostfully.bookings.domain.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +15,25 @@ import org.springframework.stereotype.Service;
 public final class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
 
+    private final PropertyRepository propertyRepository;
+
     @Autowired
-    public BookingServiceImpl(final BookingRepository bookingRepository) {
+    public BookingServiceImpl(
+            final BookingRepository bookingRepository,
+            final PropertyRepository propertyRepository
+    ) {
         this.bookingRepository = bookingRepository;
+        this.propertyRepository = propertyRepository;
     }
 
     @Override
-    public void createBooking(final CreateBookingCommand createBookingCommand) {
+    public Booking createBooking(final CreateBookingCommand createBookingCommand) {
+        final Property property = propertyRepository.findById(createBookingCommand.propertyId());
+        final Booking booking = bookingRepository.save(
+                Booking.of(createBookingCommand.bookingPeriod(), property)
+        );
 
+        return bookingRepository.findById(booking.getBookingId());
     }
 
     @Override

@@ -51,4 +51,12 @@ public class BookingEntity {
     public void setProperty(PropertyEntity property) {
         this.property = property;
     }
+
+    public Long getPropertyId() {
+        return property.getId();
+    }
+
+    public String getPropertyName() {
+        return property.getName();
+    }
 }

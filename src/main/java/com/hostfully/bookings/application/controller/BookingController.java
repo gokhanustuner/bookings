@@ -20,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +39,7 @@ public class BookingController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public BookingResponse create(@RequestBody final CreateBookingRequest createBookingRequest) {
-        bookingService.createBooking(
+        Booking booking = bookingService.createBooking(
                 CreateBookingCommand.of(
                         createBookingRequest.startDate(),
                         createBookingRequest.endDate(),
@@ -45,12 +47,14 @@ public class BookingController {
                 )
         );
 
+        DateFormat dateFormat = new SimpleDateFormat(BookingPeriod.DATE_PATTERN);
+
         return BookingResponse.of(
-                759L,
-                Long.parseLong(createBookingRequest.propertyId()),
-                "Property X",
-                createBookingRequest.startDate(),
-                createBookingRequest.endDate()
+                booking.getBookingId().value(),
+                booking.getPropertyId().value(),
+                booking.getPropertyName().value(),
+                dateFormat.format(booking.getBookingPeriod().startDate()),
+                dateFormat.format(booking.getBookingPeriod().endDate())
         );
     }
 
