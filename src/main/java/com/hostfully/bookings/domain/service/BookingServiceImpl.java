@@ -58,7 +58,10 @@ public final class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking updateBooking(final UpdateBookingCommand updateBookingCommand) {
-        final Booking booking = bookingRepository.findById(updateBookingCommand.bookingId());
+        final Booking booking = bookingRepository.findActiveBookingById(updateBookingCommand.bookingId());
+
+        checkPropertyBlockedInBookingPeriod(booking.getProperty(), updateBookingCommand.bookingPeriod());
+        checkBookingsOverlapInBookingPeriod(booking.getProperty(), updateBookingCommand.bookingPeriod());
 
         booking.setBookingPeriod(updateBookingCommand.bookingPeriod());
         bookingRepository.save(booking);
@@ -68,7 +71,7 @@ public final class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking cancelBooking(final CancelBookingCommand cancelBookingCommand) {
-        final Booking booking = bookingRepository.findById(cancelBookingCommand.bookingId());
+        final Booking booking = bookingRepository.findActiveBookingById(cancelBookingCommand.bookingId());
 
         booking.setBookingStatus(cancelBookingCommand.bookingStatus());
         bookingRepository.save(booking);

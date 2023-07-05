@@ -51,6 +51,11 @@ public final class BookingRepositoryImpl implements BookingRepository {
     }
 
     @Override
+    public void saveAll(List<Booking> bookings) {
+        bookingJPARepository.saveAll(bookingEntityMapper.domainEntityToJPAEntity(bookings));
+    }
+
+    @Override
     public Booking findById(BookingId bookingId) {
         final List<Object[]> bookingQueryResultList = entityManagerFactory
                 .createEntityManager()
@@ -74,6 +79,20 @@ public final class BookingRepositoryImpl implements BookingRepository {
                         )
                         .findFirst()
                         .orElseThrow();
+
+        return bookingEntityMapper.JPAEntityToDomainEntity(bookingEntity);
+    }
+
+    @Override
+    public Booking findActiveBookingById(BookingId bookingId) {
+        final BookingEntity bookingEntity =
+                bookingJPARepository.findBookingEntitiesByIdIsAndStatusEquals(
+                        bookingId.value(),
+                        BookingStatus.ACTIVE
+                );
+
+        if (bookingEntity == null)
+            throw new BookingNotFoundException(String.format("Booking with id %s not found", bookingId));
 
         return bookingEntityMapper.JPAEntityToDomainEntity(bookingEntity);
     }

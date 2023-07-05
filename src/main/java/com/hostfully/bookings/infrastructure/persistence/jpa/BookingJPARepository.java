@@ -16,4 +16,9 @@ public interface BookingJPARepository extends CrudRepository<BookingEntity, Long
             Date endDate,
             BookingStatus status
     );
+
+    BookingEntity findBookingEntitiesByIdIsAndStatusEquals(
+            Long id,
+            BookingStatus status
+    );
 }

@@ -10,7 +10,11 @@ import java.util.List;
 public interface BookingRepository {
     Booking save(Booking booking);
 
+    void saveAll(List<Booking> bookings);
+
     Booking findById(BookingId bookingId);
+
+    Booking findActiveBookingById(BookingId bookingId);
 
     List<Booking> findAll();
 

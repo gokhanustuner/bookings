@@ -15,4 +15,6 @@ public interface BlockRepository {
     List<Block> findAll();
 
     List<Block> findActiveBlocksByPropertyAndBlockPeriod(Property property, BlockPeriod blockPeriod);
+
+    Block findActiveBlockById(BlockId blockId);
 }

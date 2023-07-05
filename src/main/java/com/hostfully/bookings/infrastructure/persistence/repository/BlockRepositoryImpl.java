@@ -88,7 +88,7 @@ public final class BlockRepositoryImpl implements BlockRepository {
     }
 
     @Override
-    public List<Block> findActiveBlocksByPropertyAndBlockPeriod(Property property, BlockPeriod blockPeriod) {
+    public List<Block> findActiveBlocksByPropertyAndBlockPeriod(final Property property, final BlockPeriod blockPeriod) {
         return blockEntityMapper.JPAEntityToDomainEntity(
                 blockJPARepository.findBlockEntitiesByPropertyEqualsAndStartDateIsLessThanEqualAndEndDateIsGreaterThanAndBlockStatusEquals(
                         propertyEntityMapper.domainEntityToJPAEntity(property),
@@ -97,5 +97,18 @@ public final class BlockRepositoryImpl implements BlockRepository {
                         BlockStatus.ACTIVE
                 )
         );
+    }
+
+    @Override
+    public Block findActiveBlockById(final BlockId blockId) {
+        final BlockEntity blockEntity = blockJPARepository.findBlockEntitiesByIdIsAndBlockStatusEquals(
+                blockId.value(),
+                BlockStatus.ACTIVE
+        );
+
+        if (blockEntity == null)
+            throw new BlockNotFoundException(String.format("Block with id %s not found", blockId));
+
+        return blockEntityMapper.JPAEntityToDomainEntity(blockEntity);
     }
 }

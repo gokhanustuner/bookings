@@ -11,8 +11,6 @@ import com.hostfully.bookings.infrastructure.persistence.entity.BlockReasonEntit
 import com.hostfully.bookings.infrastructure.persistence.entity.PropertyEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class BlockEntityMapper implements EntityMapper<BlockEntity, Block> {
     @Override
@@ -24,11 +22,6 @@ public class BlockEntityMapper implements EntityMapper<BlockEntity, Block> {
                 BlockReason.of(JPABlockEntity.getBlockReason().getId(), JPABlockEntity.getBlockReason().getDescription()),
                 BlockStatus.valueOf(JPABlockEntity.getBlockStatus().name())
         );
-    }
-
-    @Override
-    public List<Block> JPAEntityToDomainEntity(final List<BlockEntity> JPABlockEntities) {
-        return JPABlockEntities.stream().map(this::JPAEntityToDomainEntity).toList();
     }
 
     @Override

@@ -17,4 +17,9 @@ public interface BlockJPARepository extends CrudRepository<BlockEntity, Long> {
             Date endDate,
             BlockStatus blockStatus
     );
+
+    BlockEntity findBlockEntitiesByIdIsAndBlockStatusEquals(
+            Long id,
+            BlockStatus blockStatus
+    );
 }

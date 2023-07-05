@@ -9,8 +9,6 @@ import com.hostfully.bookings.infrastructure.persistence.entity.BookingEntity;
 import com.hostfully.bookings.infrastructure.persistence.entity.PropertyEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking> {
     @Override
@@ -21,11 +19,6 @@ public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking>
                 Property.of(JPABookingEntity.getPropertyId(), JPABookingEntity.getPropertyName()),
                 BookingStatus.valueOf(JPABookingEntity.getStatus().name())
         );
-    }
-
-    @Override
-    public List<Booking> JPAEntityToDomainEntity(final List<BookingEntity> JPABookingEntities) {
-        return JPABookingEntities.stream().map(this::JPAEntityToDomainEntity).toList();
     }
 
     @Override
