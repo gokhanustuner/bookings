@@ -1,5 +1,6 @@
 package com.hostfully.bookings.infrastructure.persistence.entity;
 
+import com.hostfully.bookings.domain.entity.BookingStatus;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -19,6 +20,9 @@ public class BookingEntity {
     @ManyToOne
     @JoinColumn(name = "property_id")
     private PropertyEntity property;
+
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 
     public void setId(Long id) {
         this.id = id;
@@ -58,5 +62,13 @@ public class BookingEntity {
 
     public String getPropertyName() {
         return property.getName();
+    }
+
+    public BookingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookingStatus status) {
+        this.status = status;
     }
 }

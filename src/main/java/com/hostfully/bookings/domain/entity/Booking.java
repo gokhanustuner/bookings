@@ -13,30 +13,36 @@ public class Booking {
 
     private Property property;
 
-    public Booking() {
+    private BookingStatus bookingStatus;
+
+    private Booking() {
     }
-    public Booking(
+    private Booking(
             final BookingId bookingId,
             final BookingPeriod bookingPeriod,
-            final Property property
+            final Property property,
+            final BookingStatus bookingStatus
     ) {
         this.bookingId = bookingId;
         this.bookingPeriod = bookingPeriod;
         this.property = property;
+        this.bookingStatus = bookingStatus;
     }
 
     public static Booking of(
             final BookingPeriod bookingPeriod,
-            final Property property
+            final Property property,
+            final BookingStatus bookingStatus
     ) {
-        return new Booking(null, bookingPeriod, property);
+        return new Booking(null, bookingPeriod, property, bookingStatus);
     }
     public static Booking of(
             final BookingId bookingId,
             final BookingPeriod bookingPeriod,
-            final Property property
+            final Property property,
+            final BookingStatus bookingStatus
     ) {
-        return new Booking(bookingId, bookingPeriod, property);
+        return new Booking(bookingId, bookingPeriod, property, bookingStatus);
     }
 
     public BookingId getBookingId() {
@@ -69,5 +75,13 @@ public class Booking {
 
     public PropertyName getPropertyName() {
         return property.getPropertyName();
+    }
+
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
 }

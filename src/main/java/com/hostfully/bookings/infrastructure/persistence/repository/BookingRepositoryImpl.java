@@ -3,7 +3,6 @@ package com.hostfully.bookings.infrastructure.persistence.repository;
 import com.hostfully.bookings.domain.entity.Booking;
 import com.hostfully.bookings.domain.exception.BookingNotFoundException;
 import com.hostfully.bookings.domain.repository.BookingRepository;
-import com.hostfully.bookings.domain.repository.PropertyRepository;
 import com.hostfully.bookings.domain.value.BookingId;
 import com.hostfully.bookings.infrastructure.mapper.EntityMapper;
 import com.hostfully.bookings.infrastructure.persistence.entity.BookingEntity;
@@ -69,5 +68,12 @@ public final class BookingRepositoryImpl implements BookingRepository {
                         .orElseThrow();
 
         return bookingEntityMapper.JPAEntityToDomainEntity(bookingEntity);
+    }
+
+    @Override
+    public List<Booking> findAll() {
+        return bookingEntityMapper.JPAEntityToDomainEntity(
+                (List<BookingEntity>) bookingJPARepository.findAll()
+        );
     }
 }

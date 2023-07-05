@@ -6,13 +6,15 @@ import com.hostfully.bookings.domain.command.GetBookingCommand;
 import com.hostfully.bookings.domain.command.UpdateBookingCommand;
 import com.hostfully.bookings.domain.entity.Booking;
 
+import java.util.List;
+
 public interface BookingService {
     Booking createBooking(CreateBookingCommand createBookingCommand);
 
-    void updateBooking(UpdateBookingCommand updateBookingCommand);
-    void cancelBooking(CancelBookingCommand cancelBookingCommand);
+    Booking updateBooking(UpdateBookingCommand updateBookingCommand);
+    Booking cancelBooking(CancelBookingCommand cancelBookingCommand);
     void reCreateBooking();
-    void listBookings();
+    List<Booking> listBookings();
 
-    void getBooking(GetBookingCommand getBookingCommand);
+    Booking getBooking(GetBookingCommand getBookingCommand);
 }

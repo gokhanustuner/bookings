@@ -10,7 +10,7 @@ public record ListBookingsResponse(List<BookingResponse> bookings) {
         final List<BookingResponse> bookingNodes = new ArrayList<>();
 
         for (final Booking booking : bookings)
-            bookingNodes.add(BookingResponse.fromBooking(booking));
+            bookingNodes.add(BookingResponse.of(booking));
 
         return new ListBookingsResponse(bookingNodes);
     }

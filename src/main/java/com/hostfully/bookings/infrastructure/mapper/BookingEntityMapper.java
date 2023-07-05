@@ -1,12 +1,15 @@
 package com.hostfully.bookings.infrastructure.mapper;
 
 import com.hostfully.bookings.domain.entity.Booking;
+import com.hostfully.bookings.domain.entity.BookingStatus;
 import com.hostfully.bookings.domain.entity.Property;
 import com.hostfully.bookings.domain.value.BookingId;
 import com.hostfully.bookings.domain.value.BookingPeriod;
 import com.hostfully.bookings.infrastructure.persistence.entity.BookingEntity;
 import com.hostfully.bookings.infrastructure.persistence.entity.PropertyEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking> {
@@ -15,8 +18,14 @@ public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking>
         return Booking.of(
                 BookingId.of(JPABookingEntity.getId()),
                 BookingPeriod.of(JPABookingEntity.getStartDate(), JPABookingEntity.getEndDate()),
-                Property.of(JPABookingEntity.getPropertyId(), JPABookingEntity.getPropertyName())
+                Property.of(JPABookingEntity.getPropertyId(), JPABookingEntity.getPropertyName()),
+                BookingStatus.valueOf(JPABookingEntity.getStatus().name())
         );
+    }
+
+    @Override
+    public List<Booking> JPAEntityToDomainEntity(List<BookingEntity> JPABookingEntities) {
+        return JPABookingEntities.stream().map(this::JPAEntityToDomainEntity).toList();
     }
 
     @Override
@@ -29,6 +38,7 @@ public class BookingEntityMapper implements EntityMapper<BookingEntity, Booking>
         }
         bookingEntity.setStartDate(domainBookingEntity.getBookingPeriod().startDate());
         bookingEntity.setEndDate(domainBookingEntity.getBookingPeriod().endDate());
+        bookingEntity.setStatus(domainBookingEntity.getBookingStatus());
 
         propertyEntity.setId(domainBookingEntity.getPropertyId().value());
         bookingEntity.setProperty(propertyEntity);

@@ -4,6 +4,8 @@ import com.hostfully.bookings.domain.entity.Property;
 import com.hostfully.bookings.infrastructure.persistence.entity.PropertyEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class PropertyEntityMapper implements EntityMapper<PropertyEntity, Property> {
     @Override
@@ -12,6 +14,11 @@ public class PropertyEntityMapper implements EntityMapper<PropertyEntity, Proper
                 JPAPropertyEntity.getId(),
                 JPAPropertyEntity.getName()
         );
+    }
+
+    @Override
+    public List<Property> JPAEntityToDomainEntity(List<PropertyEntity> JPAPropertyEntities) {
+        return JPAPropertyEntities.stream().map(this::JPAEntityToDomainEntity).toList();
     }
 
     @Override
