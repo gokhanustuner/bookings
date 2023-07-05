@@ -1,9 +1,6 @@
 package com.hostfully.bookings.domain.service;
 
-import com.hostfully.bookings.domain.command.booking.CancelBookingCommand;
-import com.hostfully.bookings.domain.command.booking.CreateBookingCommand;
-import com.hostfully.bookings.domain.command.booking.GetBookingCommand;
-import com.hostfully.bookings.domain.command.booking.UpdateBookingCommand;
+import com.hostfully.bookings.domain.command.booking.*;
 import com.hostfully.bookings.domain.entity.block.Block;
 import com.hostfully.bookings.domain.entity.booking.Booking;
 import com.hostfully.bookings.domain.entity.property.Property;
@@ -80,8 +77,15 @@ public final class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void reCreateBooking() {
+    public Booking reCreateBooking(final ReCreateBookingCommand reCreateBookingCommand) {
+        final Booking booking = bookingRepository.findCancelledBookingById(reCreateBookingCommand.bookingId());
 
+        return createBooking(
+                CreateBookingCommand.of(
+                        booking.getBookingPeriod(),
+                        booking.getPropertyId()
+                )
+        );
     }
 
     @Override

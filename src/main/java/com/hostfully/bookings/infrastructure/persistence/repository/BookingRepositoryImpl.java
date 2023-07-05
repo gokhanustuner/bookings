@@ -98,6 +98,20 @@ public final class BookingRepositoryImpl implements BookingRepository {
     }
 
     @Override
+    public Booking findCancelledBookingById(BookingId bookingId) {
+        final BookingEntity bookingEntity =
+                bookingJPARepository.findBookingEntitiesByIdIsAndStatusEquals(
+                        bookingId.value(),
+                        BookingStatus.CANCELLED
+                );
+
+        if (bookingEntity == null)
+            throw new BookingNotFoundException(String.format("Booking with id %s not found", bookingId));
+
+        return bookingEntityMapper.JPAEntityToDomainEntity(bookingEntity);
+    }
+
+    @Override
     public List<Booking> findAll() {
         return bookingEntityMapper.JPAEntityToDomainEntity(
                 (List<BookingEntity>) bookingJPARepository.findAll()

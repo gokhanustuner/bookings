@@ -16,6 +16,8 @@ public interface BookingRepository {
 
     Booking findActiveBookingById(BookingId bookingId);
 
+    Booking findCancelledBookingById(BookingId bookingId);
+
     List<Booking> findAll();
 
     List<Booking> findActiveBookingsByPropertyAndBookingPeriod(Property property, BookingPeriod bookingPeriod);

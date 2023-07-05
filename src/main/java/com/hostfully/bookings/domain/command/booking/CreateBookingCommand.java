@@ -12,4 +12,12 @@ public record CreateBookingCommand(BookingPeriod bookingPeriod, PropertyId prope
                 BookingStatus.ACTIVE
         );
     }
+
+    public static CreateBookingCommand of(BookingPeriod bookingPeriod, final PropertyId propertyId) {
+        return new CreateBookingCommand(
+                bookingPeriod,
+                propertyId,
+                BookingStatus.ACTIVE
+        );
+    }
 }

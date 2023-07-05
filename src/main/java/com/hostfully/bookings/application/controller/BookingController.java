@@ -2,11 +2,8 @@ package com.hostfully.bookings.application.controller;
 
 import com.hostfully.bookings.application.request.booking.UpdateBookingRequest;
 import com.hostfully.bookings.application.response.*;
-import com.hostfully.bookings.domain.command.booking.CancelBookingCommand;
-import com.hostfully.bookings.domain.command.booking.CreateBookingCommand;
+import com.hostfully.bookings.domain.command.booking.*;
 import com.hostfully.bookings.application.request.booking.CreateBookingRequest;
-import com.hostfully.bookings.domain.command.booking.GetBookingCommand;
-import com.hostfully.bookings.domain.command.booking.UpdateBookingCommand;
 import com.hostfully.bookings.domain.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +32,16 @@ public class BookingController {
                                 createBookingRequest.endDate(),
                                 createBookingRequest.propertyId()
                         )
+                )
+        );
+    }
+
+    @PostMapping(value = "/{bookingId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookingResponse reCreate(@PathVariable final String bookingId) {
+        return BookingResponse.of(
+                bookingService.reCreateBooking(
+                        ReCreateBookingCommand.of(bookingId)
                 )
         );
     }
