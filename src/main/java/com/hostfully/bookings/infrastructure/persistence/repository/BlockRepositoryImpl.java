@@ -15,7 +15,6 @@ import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -53,29 +52,11 @@ public final class BlockRepositoryImpl implements BlockRepository {
 
     @Override
     public Block findById(final BlockId blockId) {
-        final List<Object[]> blockQueryResultList = entityManagerFactory
-                .createEntityManager()
-                .createQuery(
-                        "SELECT b, p, br FROM BlockEntity b, PropertyEntity p, BlockReasonEntity br " +
-                                "WHERE b.property = p AND b.blockReason = br AND b.id = :blockId"
+        final BlockEntity blockEntity = blockJPARepository.findById(blockId.value()).orElseThrow(
+                () -> new BlockNotFoundException(
+                        String.format("Block with id %s not found", blockId)
                 )
-                .setParameter("blockId", blockId.value())
-                .getResultList();
-
-        final BlockEntity blockEntity =
-                (BlockEntity) Arrays
-                        .stream(
-                                blockQueryResultList
-                                        .stream()
-                                        .findFirst()
-                                        .orElseThrow(
-                                                () -> new BlockNotFoundException(
-                                                        String.format("Block with id %s not found", blockId)
-                                                )
-                                        )
-                        )
-                        .findFirst()
-                        .orElseThrow();
+        );
 
         return blockEntityMapper.JPAEntityToDomainEntity(blockEntity);
     }

@@ -4,6 +4,12 @@ spring:
     username: gokhan
     password: ustuner
     driverClassName: org.h2.Driver
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 10
+      idle-timeout: 12000
+      connection-timeout: 30000
+      leak-detection-threshold: 300000
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true

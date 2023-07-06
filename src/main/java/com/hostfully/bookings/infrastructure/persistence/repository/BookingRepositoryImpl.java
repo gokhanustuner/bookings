@@ -15,7 +15,6 @@ import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -57,28 +56,11 @@ public final class BookingRepositoryImpl implements BookingRepository {
 
     @Override
     public Booking findById(BookingId bookingId) {
-        final List<Object[]> bookingQueryResultList = entityManagerFactory
-                .createEntityManager()
-                .createQuery(
-                        "SELECT b, p FROM BookingEntity b, PropertyEntity p WHERE b.property = p AND b.id = :bookingId"
+        final BookingEntity bookingEntity = bookingJPARepository.findById(bookingId.value()).orElseThrow(
+                () -> new BookingNotFoundException(
+                        String.format("Booking with id %s not found", bookingId)
                 )
-                .setParameter("bookingId", bookingId.value())
-                .getResultList();
-
-        final BookingEntity bookingEntity =
-                (BookingEntity) Arrays
-                        .stream(
-                            bookingQueryResultList
-                                    .stream()
-                                    .findFirst()
-                                    .orElseThrow(
-                                        () -> new BookingNotFoundException(
-                                            String.format("Booking with id %s not found", bookingId)
-                                        )
-                                    )
-                        )
-                        .findFirst()
-                        .orElseThrow();
+        );
 
         return bookingEntityMapper.JPAEntityToDomainEntity(bookingEntity);
     }

@@ -13,12 +13,14 @@ public class BookingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Date startDate;
 
+    @Column(nullable = false)
     private Date endDate;
 
     @ManyToOne
-    @JoinColumn(name = "property_id")
+    @JoinColumn(name = "property_id", nullable = false)
     private PropertyEntity property;
 
     @Enumerated(EnumType.STRING)

@@ -1,6 +1,6 @@
 package com.hostfully.bookings.domain.exception;
 
-public class InvalidEntityIdException extends DomainException {
+public class InvalidEntityIdException extends DomainValueObjectValidationException {
     public InvalidEntityIdException(final String message) {
         super(message);
     }

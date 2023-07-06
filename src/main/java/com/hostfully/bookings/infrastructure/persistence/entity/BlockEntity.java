@@ -20,11 +20,11 @@ public class BlockEntity {
     private BlockStatus blockStatus;
 
     @ManyToOne
-    @JoinColumn(name = "block_reason_id")
+    @JoinColumn(name = "block_reason_id", nullable = false)
     private BlockReasonEntity blockReason;
 
     @ManyToOne
-    @JoinColumn(name = "property_id")
+    @JoinColumn(name = "property_id", nullable = false)
     private PropertyEntity property;
 
     public void setId(Long id) {

@@ -9,6 +9,7 @@ public class BlockReasonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String description;
 
     public void setId(Long id) {

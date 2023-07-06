@@ -1,6 +1,6 @@
 package com.hostfully.bookings.domain.exception;
 
-public class InvalidBookingDateException extends DomainException {
+public class InvalidBookingDateException extends DomainValueObjectValidationException {
     public InvalidBookingDateException(final String message) {
         super(message);
     }

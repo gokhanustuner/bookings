@@ -1,6 +1,6 @@
 package com.hostfully.bookings.domain.exception;
 
-public class BookingNotFoundException extends DomainException {
+public class BookingNotFoundException extends DomainEntityNotFoundException {
     public BookingNotFoundException(final String message) {
         super(message);
     }

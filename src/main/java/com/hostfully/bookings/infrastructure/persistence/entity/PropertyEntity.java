@@ -11,12 +11,13 @@ public class PropertyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<BookingEntity> bookings;
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<BlockEntity> blocks;
 
     public void setId(Long id) {

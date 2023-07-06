@@ -61,7 +61,10 @@ public final class BlockServiceImpl implements BlockService {
                 )
         );
 
-        return blockRepository.findById(block.getBlockId());
+        block.setProperty(property);
+        block.setBlockReason(blockReason);
+
+        return block;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.hostfully.bookings.domain.exception;
 
-public class BlockReasonNotFoundException extends DomainException {
+public class BlockReasonNotFoundException extends DomainEntityNotFoundException {
     public BlockReasonNotFoundException(final String message) {
         super(message);
     }
