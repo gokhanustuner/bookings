@@ -33,16 +33,16 @@ public class BookingControllerTest {
     public void givenInvalidStartDateThenCreateBookingReturns400() throws Exception {
         final String endDate = LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                "{\n" +
-                                "    \"startDate\": \"2023-08-248\",\n" +
-                                "    \"endDate\": \"" + endDate + "\",\n" +
-                                "    \"propertyId\": 1\n" +
-                                "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"2023-08-248\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": 1\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -61,16 +61,16 @@ public class BookingControllerTest {
     public void givenInvalidEndDateThenCreateBookingReturns400() throws Exception {
         final String startDate = LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                "{\n" +
-                                "    \"startDate\": \"" + startDate + "\",\n" +
-                                "    \"endDate\": \"2023-087-28\",\n" +
-                                "    \"propertyId\": 1\n" +
-                                "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"2023-087-28\",\n" +
+                                                "    \"propertyId\": 1\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -79,25 +79,25 @@ public class BookingControllerTest {
                 .andExpect(jsonPath("$.message").value("endDate must be a valid date"))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidBookingDateException))
                 .andExpect(result ->
-                    assertEquals("endDate must be a valid date", result.getResolvedException().getMessage())
+                        assertEquals("endDate must be a valid date", result.getResolvedException().getMessage())
                 );
     }
 
     @Test
     public void givenStartDateIsTodaysDateThenCreateBookingReturns400() throws Exception {
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                    "{\n" +
-                                    "    \"startDate\": \"" +
-                                    LocalDate.now().format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN))
-                                    + "\",\n" +
-                                    "    \"endDate\": \"" + LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN)) + "\",\n" +
-                                    "    \"propertyId\": 1\n" +
-                                    "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" +
+                                                LocalDate.now().format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN))
+                                                + "\",\n" +
+                                                "    \"endDate\": \"" + LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN)) + "\",\n" +
+                                                "    \"propertyId\": 1\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -106,22 +106,22 @@ public class BookingControllerTest {
                 .andExpect(jsonPath("$.message").value("startDate must be a future date"))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidBookingDateException))
                 .andExpect(result ->
-                    assertEquals("startDate must be a future date", result.getResolvedException().getMessage())
+                        assertEquals("startDate must be a future date", result.getResolvedException().getMessage())
                 );
     }
 
     @Test
     public void givenEndDateIsTodaysDateThenCreateBookingReturns400() throws Exception {
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content("{\n" +
-                                    "    \"startDate\": \"" + LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN)) + "\",\n" +
-                                    "    \"endDate\": \"" + LocalDate.now().format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN)) + "\",\n" +
-                                    "    \"propertyId\": 1\n" +
-                                    "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content("{\n" +
+                                        "    \"startDate\": \"" + LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN)) + "\",\n" +
+                                        "    \"endDate\": \"" + LocalDate.now().format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN)) + "\",\n" +
+                                        "    \"propertyId\": 1\n" +
+                                        "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -130,7 +130,7 @@ public class BookingControllerTest {
                 .andExpect(jsonPath("$.message").value("endDate must be a future date"))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidBookingDateException))
                 .andExpect(result ->
-                    assertEquals("endDate must be a future date", result.getResolvedException().getMessage())
+                        assertEquals("endDate must be a future date", result.getResolvedException().getMessage())
                 );
     }
 
@@ -139,16 +139,16 @@ public class BookingControllerTest {
         final String startDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(4).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                "{\n" +
-                                "    \"startDate\": \"" + startDate + "\",\n" +
-                                "    \"endDate\": \"" + endDate + "\",\n" +
-                                "    \"propertyId\": 1\n" +
-                                "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": 1\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -157,7 +157,7 @@ public class BookingControllerTest {
                 .andExpect(jsonPath("$.message").value("endDate must be greater than the startDate"))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidBookingDateException))
                 .andExpect(result ->
-                    assertEquals("endDate must be greater than the startDate", result.getResolvedException().getMessage())
+                        assertEquals("endDate must be greater than the startDate", result.getResolvedException().getMessage())
                 );
     }
 
@@ -166,16 +166,16 @@ public class BookingControllerTest {
         final String startDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                "{\n" +
-                                "    \"startDate\": \"" + startDate + "\",\n" +
-                                "    \"endDate\": \"" + endDate + "\",\n" +
-                                "    \"propertyId\": \"1\"\n" +
-                                "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": \"1\"\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.exception").doesNotExist())
@@ -197,16 +197,16 @@ public class BookingControllerTest {
         final String startDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(9).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                post("/bookings")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(
-                            "{\n" +
-                            "    \"startDate\": \"" + startDate + "\",\n" +
-                            "    \"endDate\": \"" + endDate + "\",\n" +
-                            "    \"propertyId\": 8\n" +
-                            "}"
-                        )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": 8\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.exception").doesNotExist())
@@ -228,16 +228,16 @@ public class BookingControllerTest {
         final String startDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                post("/bookings")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(
-                            "{\n" +
-                            "    \"startDate\": \"" + startDate + "\",\n" +
-                            "    \"endDate\": \"" + endDate + "\",\n" +
-                            "    \"propertyId\": \"*1\"\n" +
-                            "}"
-                        )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": \"*1\"\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -255,16 +255,16 @@ public class BookingControllerTest {
         final String startDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                post("/bookings")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(
-                            "{\n" +
-                            "    \"startDate\": \"" + startDate + "\",\n" +
-                            "    \"endDate\": \"" + endDate + "\",\n" +
-                            "    \"propertyId\": \"-1\"\n" +
-                            "}"
-                        )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": \"-1\"\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -282,16 +282,16 @@ public class BookingControllerTest {
         final String startDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         mvc.perform(
-                post("/bookings")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(
-                            "{\n" +
-                            "    \"startDate\": \"" + startDate + "\",\n" +
-                            "    \"endDate\": \"" + endDate + "\",\n" +
-                            "    \"propertyId\": 0\n" +
-                            "}"
-                        )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": 0\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").exists())
@@ -314,24 +314,24 @@ public class BookingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
-                            "{\n" +
-                            "    \"startDate\": \"" + startDate + "\",\n" +
-                            "    \"endDate\": \"" + endDate + "\",\n" +
-                            "    \"propertyId\": 1\n" +
-                            "}"
+                                "{\n" +
+                                        "    \"startDate\": \"" + startDate + "\",\n" +
+                                        "    \"endDate\": \"" + endDate + "\",\n" +
+                                        "    \"propertyId\": 1\n" +
+                                        "}"
                         )
         );
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                "{\n" +
-                                "    \"startDate\": \"" + startDate + "\",\n" +
-                                "    \"endDate\": \"" + endDate + "\",\n" +
-                                "    \"propertyId\": 1\n" +
-                                "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\",\n" +
+                                                "    \"propertyId\": 1\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.exception").exists())
@@ -361,25 +361,25 @@ public class BookingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
-                            "{\n" +
-                            "    \"startDate\": \"" + blockStartDate + "\",\n" +
-                            "    \"endDate\": \"" + blockEndDate + "\",\n" +
-                            "    \"propertyId\": 2,\n" +
-                            "    \"reasonId\": 1\n" +
-                            "}"
+                                "{\n" +
+                                        "    \"startDate\": \"" + blockStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + blockEndDate + "\",\n" +
+                                        "    \"propertyId\": 2,\n" +
+                                        "    \"reasonId\": 1\n" +
+                                        "}"
                         )
         );
         mvc.perform(
-                    post("/bookings")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .accept(MediaType.APPLICATION_JSON_VALUE)
-                            .content(
-                                "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 2\n" +
-                                "}"
-                            )
+                        post("/bookings")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                                "    \"propertyId\": 2\n" +
+                                                "}"
+                                )
                 )
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.exception").exists())
@@ -407,17 +407,17 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + startDate + "\",\n" +
-                                "    \"endDate\": \"" + endDate + "\",\n" +
-                                "    \"propertyId\": 3\n" +
-                                "}"
+                                        "    \"startDate\": \"" + startDate + "\",\n" +
+                                        "    \"endDate\": \"" + endDate + "\",\n" +
+                                        "    \"propertyId\": 3\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
         final BookingResponse bookingResponse = objectMapper.readValue(bookingResponseContent, BookingResponse.class);
 
         mvc.perform(
-                    get(String.format("/bookings/%s", bookingResponse.id())).accept(MediaType.APPLICATION_JSON_VALUE)
+                        get(String.format("/bookings/%s", bookingResponse.id())).accept(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.exception").doesNotExist())
@@ -439,7 +439,7 @@ public class BookingControllerTest {
     public void givenBookingDoesNotExistThenReadBookingReturns404() throws Exception {
 
         mvc.perform(
-                    get("/bookings/550").accept(MediaType.APPLICATION_JSON_VALUE)
+                        get("/bookings/550").accept(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.exception").exists())
@@ -458,6 +458,38 @@ public class BookingControllerTest {
     }
 
     @Test
+    public void givenNonExistentPropertyForBookingThenCreateBookingReturns404() throws Exception {
+        final String startDate = LocalDate.now().plusDays(33).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
+        final String endDate = LocalDate.now().plusDays(45).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
+        mvc.perform(
+                post("/bookings")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .content(
+                            "{\n" +
+                            "    \"startDate\": \"" + startDate + "\",\n" +
+                            "    \"endDate\": \"" + endDate + "\",\n" +
+                            "    \"propertyId\": 75\n" +
+                            "}"
+                        )
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").exists())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.exception").value(PropertyNotFoundException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(
+                        String.format("Property with id %s not found", 75)
+                ))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof PropertyNotFoundException))
+                .andExpect(result ->
+                        assertEquals(
+                                String.format("Property with id %s not found", 75),
+                                result.getResolvedException().getMessage()
+                        )
+                );
+    }
+
+    @Test
     public void givenBookingsExistThenListBookingsReturnsAllWithStatusCode200() throws Exception {
         final String startDate = LocalDate.now().plusDays(33).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
         final String endDate = LocalDate.now().plusDays(45).format(DateTimeFormatter.ofPattern(BookingPeriod.DATE_PATTERN));
@@ -467,15 +499,15 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + startDate + "\",\n" +
-                                "    \"endDate\": \"" + endDate + "\",\n" +
-                                "    \"propertyId\": 4\n" +
-                                "}"
+                                        "    \"startDate\": \"" + startDate + "\",\n" +
+                                        "    \"endDate\": \"" + endDate + "\",\n" +
+                                        "    \"propertyId\": 4\n" +
+                                        "}"
                         )
         );
 
         mvc.perform(
-                    get("/bookings").accept(MediaType.APPLICATION_JSON_VALUE)
+                        get("/bookings").accept(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.exception").doesNotExist())
@@ -497,9 +529,9 @@ public class BookingControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .content(
                                         "{\n" +
-                                        "    \"startDate\": \"2023-08-248\",\n" +
-                                        "    \"endDate\": \"" + endDate + "\"" +
-                                        "}"
+                                                "    \"startDate\": \"2023-08-248\",\n" +
+                                                "    \"endDate\": \"" + endDate + "\"" +
+                                                "}"
                                 )
                 )
                 .andExpect(status().isBadRequest())
@@ -524,9 +556,9 @@ public class BookingControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .content(
                                         "{\n" +
-                                        "    \"startDate\": \"" + startDate + "\",\n" +
-                                        "    \"endDate\": \"2023-08-248\"" +
-                                        "}"
+                                                "    \"startDate\": \"" + startDate + "\",\n" +
+                                                "    \"endDate\": \"2023-08-248\"" +
+                                                "}"
                                 )
                 )
                 .andExpect(status().isBadRequest())
@@ -568,9 +600,9 @@ public class BookingControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .content(
                                         "{\n" +
-                                        "    \"startDate\": \"" + updatedStartDate + "\",\n" +
-                                        "    \"endDate\": \"" + updatedEndDate + "\"" +
-                                        "}"
+                                                "    \"startDate\": \"" + updatedStartDate + "\",\n" +
+                                                "    \"endDate\": \"" + updatedEndDate + "\"" +
+                                                "}"
                                 )
                 )
                 .andExpect(status().isOk())
@@ -631,9 +663,9 @@ public class BookingControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .content(
                                         "{\n" +
-                                        "    \"startDate\": \"" + bookingOneUpdatedStartDate + "\",\n" +
-                                        "    \"endDate\": \"" + bookingOneUpdatedEndDate + "\"" +
-                                        "}"
+                                                "    \"startDate\": \"" + bookingOneUpdatedStartDate + "\",\n" +
+                                                "    \"endDate\": \"" + bookingOneUpdatedEndDate + "\"" +
+                                                "}"
                                 )
                 )
                 .andExpect(status().isConflict())
@@ -673,10 +705,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 14\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 14\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -688,11 +720,11 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + blockStartDate + "\",\n" +
-                                "    \"endDate\": \"" + blockEndDate + "\",\n" +
-                                "    \"propertyId\": 14,\n" +
-                                "    \"reasonId\": 1\n" +
-                                "}"
+                                        "    \"startDate\": \"" + blockStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + blockEndDate + "\",\n" +
+                                        "    \"propertyId\": 14,\n" +
+                                        "    \"reasonId\": 1\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -702,9 +734,9 @@ public class BookingControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .content(
                                         "{\n" +
-                                        "    \"startDate\": \"" + bookingUpdatedStartDate + "\",\n" +
-                                        "    \"endDate\": \"" + bookingUpdatedEndDate + "\"" +
-                                        "}"
+                                                "    \"startDate\": \"" + bookingUpdatedStartDate + "\",\n" +
+                                                "    \"endDate\": \"" + bookingUpdatedEndDate + "\"" +
+                                                "}"
                                 )
                 )
                 .andExpect(status().isConflict())
@@ -740,19 +772,19 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 18\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 18\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
         final BookingResponse bookingResponse = objectMapper.readValue(bookingResponseContent, BookingResponse.class);
 
         mvc.perform(
-                delete(String.format("/bookings/%s", bookingResponse.id()))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-        )
+                        delete(String.format("/bookings/%s", bookingResponse.id()))
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.exception").doesNotExist())
                 .andExpect(jsonPath("$.message").doesNotExist())
@@ -779,10 +811,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 18\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 18\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -793,9 +825,9 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
         );
         mvc.perform(
-                delete(String.format("/bookings/%s", bookingResponse.id()))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-        )
+                        delete(String.format("/bookings/%s", bookingResponse.id()))
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.exception").exists())
                 .andExpect(jsonPath("$.message").exists())
@@ -825,10 +857,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 18\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 18\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -839,16 +871,16 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
         );
         mvc.perform(
-                put(String.format("/bookings/%s", bookingResponse.id()))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(
-                                "{\n" +
-                                "    \"startDate\": \"" + bookingUpdatedStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingUpdatedEndDate + "\"" +
-                                "}"
-                        )
-        )
+                        put(String.format("/bookings/%s", bookingResponse.id()))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                        "{\n" +
+                                                "    \"startDate\": \"" + bookingUpdatedStartDate + "\",\n" +
+                                                "    \"endDate\": \"" + bookingUpdatedEndDate + "\"" +
+                                                "}"
+                                )
+                )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.exception").exists())
                 .andExpect(jsonPath("$.message").exists())
@@ -876,10 +908,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 18\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 18\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -890,8 +922,8 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
         );
         mvc.perform(
-                get(String.format("/bookings/%s", bookingResponse.id())).accept(MediaType.APPLICATION_JSON_VALUE)
-        )
+                        get(String.format("/bookings/%s", bookingResponse.id())).accept(MediaType.APPLICATION_JSON_VALUE)
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.exception").doesNotExist())
                 .andExpect(jsonPath("$.message").doesNotExist())
@@ -918,10 +950,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 15\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 15\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -984,10 +1016,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 19\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 19\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -1004,15 +1036,15 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + anotherBookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + anotherBookingEndDate + "\",\n" +
-                                "    \"propertyId\": 19\n" +
-                                "}"
+                                        "    \"startDate\": \"" + anotherBookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + anotherBookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 19\n" +
+                                        "}"
                         )
         );
 
         mvc.perform(
-                post(String.format("/bookings/%s", bookingResponse.id()))
+                        post(String.format("/bookings/%s", bookingResponse.id()))
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(status().isConflict())
@@ -1044,10 +1076,10 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + bookingStartDate + "\",\n" +
-                                "    \"endDate\": \"" + bookingEndDate + "\",\n" +
-                                "    \"propertyId\": 20\n" +
-                                "}"
+                                        "    \"startDate\": \"" + bookingStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + bookingEndDate + "\",\n" +
+                                        "    \"propertyId\": 20\n" +
+                                        "}"
                         )
         ).andReturn().getResponse().getContentAsString();
 
@@ -1064,17 +1096,17 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(
                                 "{\n" +
-                                "    \"startDate\": \"" + blockStartDate + "\",\n" +
-                                "    \"endDate\": \"" + blockEndDate + "\",\n" +
-                                "    \"propertyId\": 20,\n" +
-                                "    \"reasonId\": 1\n" +
-                                "}"
+                                        "    \"startDate\": \"" + blockStartDate + "\",\n" +
+                                        "    \"endDate\": \"" + blockEndDate + "\",\n" +
+                                        "    \"propertyId\": 20,\n" +
+                                        "    \"reasonId\": 1\n" +
+                                        "}"
                         )
         );
 
         mvc.perform(
-                post(String.format("/bookings/%s", bookingResponse.id()))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        post(String.format("/bookings/%s", bookingResponse.id()))
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.exception").exists())
