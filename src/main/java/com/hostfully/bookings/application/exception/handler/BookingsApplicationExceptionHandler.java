@@ -2,7 +2,6 @@ package com.hostfully.bookings.application.exception.handler;
 
 import com.hostfully.bookings.application.response.ErrorResponse;
 import com.hostfully.bookings.domain.exception.DomainEntityNotFoundException;
-import com.hostfully.bookings.domain.exception.DomainException;
 import com.hostfully.bookings.domain.exception.DomainUseCaseException;
 import com.hostfully.bookings.domain.exception.DomainValueObjectValidationException;
 import org.springframework.http.HttpStatus;
