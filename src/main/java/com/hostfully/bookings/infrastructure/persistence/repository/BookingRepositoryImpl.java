@@ -104,7 +104,7 @@ public final class BookingRepositoryImpl implements BookingRepository {
     public List<Booking> findActiveBookingsByPropertyAndBookingPeriod(Property property, BookingPeriod bookingPeriod) {
         return bookingEntityMapper.JPAEntityToDomainEntity(
                 bookingJPARepository
-                        .findBookingEntitiesByPropertyEqualsAndStartDateIsLessThanEqualAndEndDateIsGreaterThanAndStatusEquals(
+                        .findBookingEntitiesByPropertyEqualsAndStartDateIsLessThanAndEndDateIsGreaterThanAndStatusEquals(
                             propertyEntityMapper.domainEntityToJPAEntity(property),
                             bookingPeriod.endDate(),
                             bookingPeriod.startDate(),

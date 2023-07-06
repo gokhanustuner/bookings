@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BookingJPARepository extends CrudRepository<BookingEntity, Long> {
 
-    List<BookingEntity> findBookingEntitiesByPropertyEqualsAndStartDateIsLessThanEqualAndEndDateIsGreaterThanAndStatusEquals(
+    List<BookingEntity> findBookingEntitiesByPropertyEqualsAndStartDateIsLessThanAndEndDateIsGreaterThanAndStatusEquals(
             PropertyEntity property,
             Date startDate,
             Date endDate,
